@@ -86,15 +86,59 @@ st.markdown("""
 st.title("Live TV")
 
 # Read M3U8 content from file
-try:
-    with open('list.m3u', 'r', encoding='utf-8') as file:
-        m3u_content = file.read()
-except FileNotFoundError:
-    st.error("list.m3u file not found! Please make sure the file exists in the correct location.")
+import os
+
+# Try multiple possible locations for the M3U file
+possible_paths = [
+    'list.m3u',  # Current directory
+    './list.m3u',  # Explicit current directory
+    os.path.join(os.path.dirname(__file__), 'list.m3u'),  # Same directory as script
+    'data/list.m3u',  # Data subdirectory
+    './data/list.m3u',  # Explicit data subdirectory
+]
+
+m3u_content = None
+found_file = None
+
+for file_path in possible_paths:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            m3u_content = file.read()
+            found_file = file_path
+            break
+    except FileNotFoundError:
+        continue
+    except Exception as e:
+        st.warning(f"Error reading {file_path}: {e}")
+        continue
+
+if m3u_content is None:
+    st.error("""
+    **M3U file not found!** 
+    
+    Please ensure your `list.m3u` file is uploaded to your repository in one of these locations:
+    - Root directory: `list.m3u`
+    - Data folder: `data/list.m3u`
+    
+    **For Streamlit Cloud deployment:**
+    1. Upload your `list.m3u` file to your GitHub repository
+    2. Make sure it's in the same directory as `main.py`
+    3. Redeploy your app
+    
+    **Current working directory:** `{os.getcwd()}`
+    
+    **Files in current directory:** 
+    """)
+    
+    # List current directory contents for debugging
+    try:
+        files = os.listdir('.')
+        st.write("📁 Files found:", files)
+    except:
+        st.write("Could not list directory contents")
+    
     st.stop()
-except Exception as e:
-    st.error(f"Error reading list.m3u file: {e}")
-    st.stop()
+
 
 # Function to parse M3U content into a dictionary with categories
 def parse_m3u_content(content):
