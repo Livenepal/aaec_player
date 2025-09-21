@@ -196,10 +196,21 @@ else:
         
         # Mobile-friendly channel selector
         channel_names = [x.split('] ')[1] if '] ' in x else x for x in available_channels]
+        
+        # Find StarSports 1 HD as default for mobile
+        default_mobile_index = 0
+        for i, channel in enumerate(available_channels):
+            channel_name = channel.split('] ')[1] if '] ' in channel else channel
+            clean_channel_name = channel_name.split('. ', 1)[1] if '. ' in channel_name else channel_name
+            if "StarSports 1 HD" in clean_channel_name:
+                default_mobile_index = i
+                break
+        
         selected_index = st.selectbox(
             "Channel:",
             range(len(available_channels)),
             format_func=lambda x: channel_names[x],
+            index=default_mobile_index,
             key="mobile_channel"
         )
         selected_channel_name = available_channels[selected_index]
@@ -263,9 +274,19 @@ else:
         
         st.sidebar.write(f"**{len(available_channels)} channels available**")
         
+        # Find StarSports 1 HD as default
+        default_index = 0
+        for i, channel in enumerate(available_channels):
+            channel_name = channel.split('] ')[1] if '] ' in channel else channel
+            clean_channel_name = channel_name.split('. ', 1)[1] if '. ' in channel_name else channel_name
+            if "StarSports 1 HD" in clean_channel_name:
+                default_index = i
+                break
+        
         selected_channel_name = st.sidebar.radio(
             "Choose a channel to watch:",
             available_channels,
+            index=default_index,
             format_func=lambda x: x.split('] ')[1] if '] ' in x else x
         )
         
@@ -380,26 +401,35 @@ else:
         debug: false,
         enableWorker: true,
         lowLatencyMode: false,
-        backBufferLength: isMobile ? 15 : 30,
-        maxBufferLength: isMobile ? 20 : 30,
-        maxMaxBufferLength: isMobile ? 30 : 60,
-        startLevel: isMobile ? 0 : -1,
-        autoStartLoad: true,
-        capLevelToPlayerSize: true
+        backBufferLength: 30,
+        maxBufferLength: 30,
+        maxMaxBufferLength: 60,
+        startLevel: -1,
+        autoStartLoad: true
       }};
       
-      var hls = new Hls(hlsConfig);
-      window.currentHls = hls;
-
-      // Check if HLS.js is supported
       if (Hls.isSupported()) {{
-        console.log('HLS.js is supported');
-        
+        var hls = new Hls(hlsConfig);
+        window.currentHls = hls;
+
         hls.on(Hls.Events.MANIFEST_PARSED, function() {{
           console.log('Manifest parsed, starting playback');
-          video.play().catch(e => {{
-            console.log('Autoplay failed, user interaction required:', e);
-          }});
+          setTimeout(() => {{
+            video.play().catch(e => {{
+              console.log('Autoplay failed, user interaction required:', e);
+            }});
+          }}, 500);
+        }});
+        
+        hls.on(Hls.Events.FRAG_LOADED, function() {{
+          console.log('First fragment loaded, attempting play');
+          setTimeout(() => {{
+            if (video.paused) {{
+              video.play().catch(e => {{
+                console.log('Autoplay failed on fragment load:', e);
+              }});
+            }}
+          }}, 100);
         }});
         
         hls.on(Hls.Events.ERROR, function (event, data) {{
@@ -434,24 +464,58 @@ else:
           }}
         }});
         
-        hls.on(Hls.Events.LEVEL_LOADED, function(event, data) {{
-          console.log('Level loaded successfully');
-        }});
-        
-        // Load the source after setting up event listeners
+        // Load source and attach media
         hls.loadSource('{selected_channel_url}');
         hls.attachMedia(video);
+        
+        // Additional autoplay attempt after attachment
+        setTimeout(() => {{
+          if (video.paused && video.readyState >= 2) {{
+            console.log('Attempting autoplay after media attachment');
+            video.play().catch(e => {{
+              console.log('Post-attachment autoplay failed:', e);
+            }});
+          }}
+        }}, 1000);
         
       }} else if (video.canPlayType('application/vnd.apple.mpegurl')) {{
         console.log('Using native HLS support');
         video.src = '{selected_channel_url}';
         video.addEventListener('loadedmetadata', function() {{
-          video.play().catch(e => console.log('Autoplay failed:', e));
+          setTimeout(() => {{
+            video.play().catch(e => console.log('Autoplay failed:', e));
+          }}, 500);
+        }});
+        video.addEventListener('canplay', function() {{
+          setTimeout(() => {{
+            if (video.paused) {{
+              video.play().catch(e => console.log('Can play autoplay failed:', e));
+            }}
+          }}, 200);
         }});
       }} else {{
         console.error('HLS not supported');
         document.getElementById('player-container').innerHTML = '<p style="color: white; text-align: center; padding: 20px;">Your browser does not support HLS video playback. Please try using Chrome, Firefox, or Safari.</p>';
       }}
+      
+      // Add general video event listeners for better autoplay handling
+      video.addEventListener('loadeddata', function() {{
+        console.log('Video loaded data, attempting autoplay');
+        setTimeout(() => {{
+          if (video.paused) {{
+            video.play().catch(e => console.log('Loadeddata autoplay failed:', e));
+          }}
+        }}, 300);
+      }});
+      
+      video.addEventListener('canplaythrough', function() {{
+        console.log('Video can play through, attempting autoplay');
+        setTimeout(() => {{
+          if (video.paused) {{
+            video.play().catch(e => console.log('Canplaythrough autoplay failed:', e));
+          }}
+        }}, 100);
+      }});
       
       // Add click to play functionality
       video.addEventListener('click', function() {{
@@ -462,22 +526,24 @@ else:
         }}
       }});
       
-      // Add loading indicator
-      video.addEventListener('loadstart', function() {{
-        console.log('Loading started');
-      }});
-      
-      video.addEventListener('canplay', function() {{
-        console.log('Video can start playing');
-      }});
-      
-      video.addEventListener('playing', function() {{
-        console.log('Video is playing');
-      }});
-      
-      video.addEventListener('error', function(e) {{
-        console.error('Video error:', e);
-      }});
+      // Try autoplay after a short delay when everything is loaded
+      setTimeout(() => {{
+        if (video.paused && video.readyState >= 2) {{
+          console.log('Final autoplay attempt');
+          video.play().catch(e => {{
+            console.log('Final autoplay failed, user interaction required:', e);
+            // Show a subtle play button overlay if autoplay fails
+            var playButton = document.createElement('div');
+            playButton.innerHTML = '▶️ Click to Play';
+            playButton.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; z-index: 1000;';
+            playButton.onclick = function() {{
+              video.play();
+              playButton.remove();
+            }};
+            document.getElementById('player-container').appendChild(playButton);
+          }});
+        }}
+      }}, 2000);
       
       // Mobile-specific touch controls
       if (isMobile) {{
@@ -499,7 +565,7 @@ else:
       }}
     </script>
     """
-    st.components.v1.html(hls_player_html, height=600, scrolling=False)
+    st.components.v1.html(hls_player_html, height=620, scrolling=False)
     
     # Responsive controls section
     if not is_mobile:
