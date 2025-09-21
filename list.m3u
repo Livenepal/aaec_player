@@ -1,0 +1,121 @@
+#EXTM3U
+#========SERIALS==========
+#EXTINF:0,ZeeTV HD 
+http://103.10.30.130:8081/viatv/viazeetvhd/chunks.m3u8
+#EXTINF:0,Colors 
+http://103.10.30.130:8081/viatv/viacolors/chunks.m3u8
+#EXTINF:0,Colors HD
+http://103.10.30.130:8081/viatv/viacolors/chunks.m3u8
+#EXTINF:0,Colors Rishtey
+http://103.10.30.130:8081/viatv/viacolorsristey.stream/chunks.m3u8
+
+
+#========SPORTS==========
+#EXTINF:0,StarSports1 
+http://103.10.30.130:8081/viatv/viastarsports1sd/chunks.m3u8
+#EXTINF:0,StarSports 2 
+http://103.10.30.130:8081/viatv/viastarsports2sd/chunks.m3u8
+#EXTINF:0,StarSports 3 
+http://103.10.30.130:8081/viatv/viastarsports3sd/chunks.m3u8
+#EXTINF:0,StarSports 1 HD
+http://103.10.30.130:8081/viatv/viastarsports1hd/chunks.m3u8
+#EXTINF:0,StarSports 2 HD
+http://103.10.30.130:8081/viatv/viastarsports2hd/chunks.m3u8
+#EXTINF:0,StarSports 3 HD
+http://103.10.30.130:8081/viatv/viastarsports3hd/chunks.m3u8
+#EXTINF:0,StarSports SELECT 1 HD
+http://103.10.30.130:8081/viatv/viaselecthd/chunks.m3u8
+#EXTINF:0,StarSports SELECT 2 HD
+http://103.10.30.130:8081/viatv/viaselecthd2/chunks.m3u8
+#EXTINF:0,StarSports SELECT 1
+http://103.10.30.130:8081/viatv/viaselect1sd/chunks.m3u8
+#EXTINF:0,StarSports SELECT 2
+http://103.10.30.130:8081/viatv/viachannelv/chunks.m3u8
+#EXTINF:0,StarSports 1 HD HINDI
+http://103.10.30.130:8081/viatv/viastarsports3hd/chunks.m3u8
+#EXTINF:0,Action Sports HD
+http://103.10.30.130:8081/viatv/viaactionsportshd/chunks.m3u8
+#EXTINF:0,Sony Ten 1 HD
+http://103.10.30.130:8081/viatv/viaten1hd/chunks.m3u8
+#EXTINF:0,Sony Ten 2 HD
+http://103.10.30.130:8081/viatv/viaten2hd/chunks.m3u8
+#EXTINF:0,Sony Ten 3 HD
+http://103.10.30.130:8081/viatv/viaten3hd/chunks.m3u8
+
+#========MUSICS AND SERIES==========
+#EXTINF:0,Mtv 
+http://103.10.30.130:8081/viatv/viamtv/chunks.m3u8
+#EXTINF:0,Mtv HD+
+http://103.10.30.130:8081/viatv/viaMtvHD.stream/chunks.m3u8
+#EXTINF:0,TLC 
+http://103.10.30.130:8081/viatv/viatlcindia/chunks.m3u8
+#EXTINF:0,ZOOM
+http://103.10.30.130:8081/viatv/viazoom/chunks.m3u8
+#EXTINF:0,M Tunes
+http://103.10.30.130:8081/viatv/viamtuneshd/chunks.m3u8
+
+#========Cartoon==========
+#EXTINF:0,Nick 
+http://103.10.30.130:8081/viatv/vianick/chunks.m3u8
+#EXTINF:0,Disney 
+http://103.10.30.130:8081/viatv/viaDisneyChannel1500.stream/chunks.m3u8
+#EXTINF:0,Nick JR
+http://103.10.30.130:8081/viatv/vianickjr/chunks.m3u8
+#EXTINF:0,Disney JR
+http://103.10.30.130:8081/viatv/viadisneyjunior/chunks.m3u8
+#EXTINF:0,CBeebies
+http://103.10.30.130:8081/viatv/viacb/chunks.m3u8
+#EXTINF:0,Sonic 
+http://103.10.30.130:8081/viatv/viaSonicSd.stream/chunks.m3u8
+
+#========Movies==========
+#EXTINF:0,StarPlus 
+http://103.10.30.130:8081/viatv/viaStarPlusSd.stream/chunks.m3u8
+#EXTINF:0,StarGold 
+http://103.10.30.130:8081/viatv/viaStarGoldSD.stream/chunks.m3u8
+#EXTINF:0,SONY MAX HD
+http://103.10.30.130:8081/viatv/viasonymaxhd/chunks.m3u8
+#EXTINF:0,& Pictures HD
+http://103.10.30.130:8081/viatv/viaandpicture/chunks.m3u8
+#EXTINF:0,Zee Cinema HD
+http://103.10.30.130:8081/viatv/viazeecinemahd/chunks.m3u8
+#EXTINF:0,StarUtshavMovies HD
+http://103.10.30.130:8081/viatv/viastarutsav/chunks.m3u8
+#EXTINF:0,& Tv HD
+http://103.10.30.130:8081/viatv/viaandtv/chunks.m3u8
+#EXTINF:0,StarPlus HD
+http://103.10.30.130:8081/viatv/viaandtv/chunks.m3u8
+#EXTINF:0,Zee Bollywood
+http://103.10.30.130:8081/viatv/viazeecinema/chunks.m3u8
+
+#========Danzer and Wildlife==========
+#EXTINF:0,National Geographic 
+http://103.10.30.130:8081/viatv/vianatgeowildhd/chunks.m3u8
+#EXTINF:0,Animal Planet 
+http://103.10.30.130:8081/viatv/viaanimalplanet/chunks.m3u8
+#EXTINF:0,Discovery HD
+http://103.10.30.130:8081/viatv/viadiscoveryhd/chunks.m3u8
+#EXTINF:0,HBO
+http://103.10.30.130:8081/viatv/viahbohd/chunks.m3u8
+
+#========NEPALI==========
+#EXTINF:0,TV Filmy
+http://103.10.30.130:8081/viatv/viatvfilmy/chunks.m3u8
+#EXTINF:0,NtvNepal 
+http://103.10.30.130:8081/viatv/viantvnepal/chunks.m3u8
+#EXTINF:0,Avenews 
+http://103.10.30.130:8081/viatv/viaavenews/chunks.m3u8
+#EXTINF:0,Kantipur HD 
+http://103.10.30.130:8081/viatv/viakantipuriptv/chunks.m3u8
+#EXTINF:0,Kantipur Cineplex
+http://103.10.30.130:8081/viatv/viaKntCineplexTv.stream/chunks.m3u8
+#EXTINF:0,Ap1 HD 
+http://103.10.30.130:8081/viatv/viaap1hd/chunks.m3u8
+#EXTINF:0,Sagarmatha TV
+http://103.10.30.130:8081/viatv/viasagar/chunks.m3u8
+#EXTINF:0,ABC News
+http://103.10.30.130:8081/viatv/viaabc/chunks.m3u8
+#EXTINF:0,News 24
+http://103.10.30.130:8081/viatv/viaNews24/chunks.m3u8
+#EXTINF:0,Tv Today
+http://103.10.30.130:8081/viatv/viatvtoday/chunks.m3u8
