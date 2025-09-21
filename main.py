@@ -101,6 +101,8 @@ m3u_content = None
 found_file = None
 
 for file_path in possible_paths:
+    if not isinstance(file_path, str):
+        continue
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             m3u_content = file.read()
